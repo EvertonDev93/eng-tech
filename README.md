@@ -31,12 +31,12 @@ O projeto contempla as seguintes etapas:
 
 ## 👥 Integrantes
 
-* Davi Araujo
-* Erickson Soares
-* Everton Ribeiro
-* Felipe Santana
-* Leonardo Gomes
-* Rafael Cruz
+* Davi Araujo 10731795
+* Erickson Soares  10732435
+* Everton Ribeiro 10732297
+* Felipe Santana 10732452
+* Leonardo Gomes 10731860
+* Rafael Cruz 10732297
 
 ## 📊 Arquitetura do Projeto
 
