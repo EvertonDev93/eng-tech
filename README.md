@@ -44,4 +44,8 @@ A arquitetura será definida conforme a evolução do projeto, contemplando o fl
 
 ## 🚀 Status do Projeto
 
-🚧 Em desenvolvimento
+1 - Modelagem do banco de dados (Postgres)
+2 - API Back End conectar com os dados do Spotify (Python) 
+3 - StreamLit + PowerBi (Visualização)
+
+3 - 
