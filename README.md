@@ -46,6 +46,14 @@ A arquitetura será definida conforme a evolução do projeto, contemplando o fl
 
 Este projeto utiliza a API do Spotify para coletar dados de artistas, álbuns, músicas e playlists, com o objetivo de estruturar uma base analítica para estudos de Engenharia de Dados.
 
+## Status do Projeto
+
+1 - Modelagem do banco de dados (Postgres)
+2 - API Back End conectar com os dados do Spotify (Python) 
+3 - StreamLit + PowerBi (Visualização)
+
+3 - 
+
 ## Segurança das credenciais
 
 As credenciais da API do Spotify não devem ser inseridas diretamente no código-fonte.
@@ -54,11 +62,3 @@ O projeto utiliza um arquivo local chamado:
 
 ```text
 config/secrets.json
-
-## Status do Projeto
-
-1 - Modelagem do banco de dados (Postgres)
-2 - API Back End conectar com os dados do Spotify (Python) 
-3 - StreamLit + PowerBi (Visualização)
-
-3 - 
