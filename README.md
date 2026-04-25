@@ -31,12 +31,12 @@ O projeto contempla as seguintes etapas:
 
 ## 👥 Integrantes
 
-* Davi Araujo
-* Erickson Soares
-* Everton Ribeiro
-* Felipe Santana
-* Leonardo Gomes
-* Rafael Cruz
+* Davi Araujo 10731795
+* Erickson Soares  10732435
+* Everton Ribeiro 10732297
+* Felipe Santana 10732452
+* Leonardo Gomes 10731860
+* Rafael Cruz 10732297
 
 ## 📊 Arquitetura do Projeto
 
@@ -44,4 +44,8 @@ A arquitetura será definida conforme a evolução do projeto, contemplando o fl
 
 ## 🚀 Status do Projeto
 
-🚧 Em desenvolvimento
+1 - Modelagem do banco de dados (Postgres)
+2 - API Back End conectar com os dados do Spotify (Python) 
+3 - StreamLit + PowerBi (Visualização)
+
+3 - 
