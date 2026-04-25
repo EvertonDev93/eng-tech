@@ -192,15 +192,7 @@ class SpotifyAPI:
 
         return self.tratar_resposta_api(response)
     
-    def request_paginated(
-        self,
-        endpoint,
-        params=None,
-        chave_principal=None,
-        chave_items="items",
-        limit=50,
-        max_paginas=None
-    ):
+    def request_paginated(self, endpoint, params=None, chave_principal=None, chave_items="items", limit=50, max_paginas=None):
         """
         Executa chamadas GET paginadas na API do Spotify.
 
@@ -260,6 +252,160 @@ class SpotifyAPI:
             offset += limit
 
         return todos_items
+    
+    def search(self, query, search_type, limit=10, max_paginas=1, market="BR"):
+        """
+        Executa uma busca genérica no endpoint /search da API do Spotify.
+
+        Args:
+            query (str): Termo pesquisado. Ex: 'Drake', 'One Dance', 'Anitta'
+            search_type (str): Tipo de busca. Ex: 'artist', 'track', 'album', 'playlist'
+            limit (int): Quantidade de registros por página.
+            max_paginas (int): Quantidade máxima de páginas.
+            market (str): Mercado da busca. Ex: 'BR', 'US'
+
+        Returns:
+            list: Lista de itens encontrados.
+        """
+
+        chaves_por_tipo = {
+            "artist": "artists",
+            "track": "tracks",
+            "album": "albums",
+            "playlist": "playlists"
+        }
+
+        if search_type not in chaves_por_tipo:
+            raise ValueError(
+                "search_type inválido. Use: 'artist', 'track', 'album' ou 'playlist'."
+            )
+
+        params = {
+            "q": query,
+            "type": search_type,
+            "limit": limit
+        }
+
+        if search_type in ["track", "album", "playlist"]:
+            params["market"] = market
+
+        chave_principal = chaves_por_tipo[search_type]
+
+        return self.request_paginated(
+            endpoint="search",
+            params=params,
+            chave_principal=chave_principal,
+            limit=limit,
+            max_paginas=max_paginas
+        )
+    
+    def search_artists(self, artist_name, limit=10, max_paginas=1):
+        """
+        Busca artistas pelo nome.
+
+        Args:
+            artist_name (str): Nome do artista.
+            limit (int): Quantidade de registros por página.
+            max_paginas (int): Quantidade máxima de páginas.
+
+        Returns:
+            list: Lista de artistas encontrados.
+        """
+
+        return self.search(
+            query=artist_name,
+            search_type="artist",
+            limit=limit,
+            max_paginas=max_paginas
+        )
+    
+    def search_tracks(self, track_name, limit=10, max_paginas=1, market="BR"):
+        """
+        Busca músicas pelo nome.
+
+        Args:
+            track_name (str): Nome da música.
+            limit (int): Quantidade de registros por página.
+            max_paginas (int): Quantidade máxima de páginas.
+            market (str): Mercado da busca. Ex: 'BR', 'US'
+
+        Returns:
+            list: Lista de músicas encontradas.
+        """
+
+        return self.search(
+            query=track_name,
+            search_type="track",
+            limit=limit,
+            max_paginas=max_paginas,
+            market=market
+        )
+    
+    def search_tracks(self, track_name, limit=10, max_paginas=1, market="BR"):
+        """
+        Busca músicas pelo nome.
+
+        Args:
+            track_name (str): Nome da música.
+            limit (int): Quantidade de registros por página.
+            max_paginas (int): Quantidade máxima de páginas.
+            market (str): Mercado da busca. Ex: 'BR', 'US'
+
+        Returns:
+            list: Lista de músicas encontradas.
+        """
+
+        return self.search(
+            query=track_name,
+            search_type="track",
+            limit=limit,
+            max_paginas=max_paginas,
+            market=market
+        )
+    
+    def search_albums(self, album_name, limit=10, max_paginas=1, market="BR"):
+        """
+        Busca álbuns pelo nome.
+
+        Args:
+            album_name (str): Nome do álbum.
+            limit (int): Quantidade de registros por página.
+            max_paginas (int): Quantidade máxima de páginas.
+            market (str): Mercado da busca. Ex: 'BR', 'US'
+
+        Returns:
+            list: Lista de álbuns encontrados.
+        """
+
+        return self.search(
+            query=album_name,
+            search_type="album",
+            limit=limit,
+            max_paginas=max_paginas,
+            market=market
+        )
+    
+    def search_playlists(self, playlist_name, limit=10, max_paginas=1, market="BR"):
+        """
+        Busca playlists pelo nome.
+
+        Args:
+            playlist_name (str): Nome ou termo da playlist.
+            limit (int): Quantidade de registros por página.
+            max_paginas (int): Quantidade máxima de páginas.
+            market (str): Mercado da busca. Ex: 'BR', 'US'
+
+        Returns:
+            list: Lista de playlists encontradas.
+        """
+
+        return self.search(
+            query=playlist_name,
+            search_type="playlist",
+            limit=limit,
+            max_paginas=max_paginas,
+            market=market
+        )
 
 # client_id, client_secret = carregar_credenciais_spotify()
 
