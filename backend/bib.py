@@ -406,6 +406,34 @@ class SpotifyAPI:
             max_paginas=max_paginas,
             market=market
         )
+    
+    def get_audio_features(self, track_id: str) -> dict:
+        """
+        Busca as características musicais de uma música pelo track_id.
+
+        Retorna dados como:
+        danceability, energy, key, loudness, mode, speechiness,
+        acousticness, instrumentalness, liveness, valence, tempo,
+        duration_ms e time_signature.
+        """
+
+        if not track_id:
+            raise ValueError("O track_id não pode estar vazio.")
+
+        endpoint = f"audio-features/{track_id}"
+
+        return self.request(
+            endpoint=endpoint
+        )
+    
+    def get_audio_features_df(self, track_id: str) -> pd.DataFrame:
+        """
+        Busca as audio features de uma música e retorna como DataFrame.
+        """
+
+        data = self.get_audio_features(track_id)
+
+        return pd.DataFrame([data])
 
 # client_id, client_secret = carregar_credenciais_spotify()
 
