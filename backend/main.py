@@ -18,9 +18,8 @@ pasta_saida.mkdir(parents=True, exist_ok=True)
 # Marca o início
 inicio = time.perf_counter()
 
-# ==========================
-# 1. Search Artists
-# ==========================
+# 1. Procurar Artists
+
 artistas = api.search_artists(
     artist_name="Drake",
     limit=10,
@@ -37,9 +36,8 @@ salvar_dataframe_excel(
 print("Arquivo gerado: data/raw/search_artists_drake.xlsx")
 print(df_artistas.head())
 
-# ==========================
-# 2. Search Tracks
-# ==========================
+# 2. Procurar Tracks
+
 musicas = api.search_tracks(
     track_name="One Dance",
     limit=10,
@@ -57,9 +55,8 @@ salvar_dataframe_excel(
 print("Arquivo gerado: data/raw/search_tracks_one_dance.xlsx")
 print(df_musicas.head())
 
-# ==========================
-# 3. Search Albums
-# ==========================
+# 3. Procurar Albums
+
 albuns = api.search_albums(
     album_name="Scorpion",
     limit=10,
@@ -77,9 +74,8 @@ salvar_dataframe_excel(
 print("Arquivo gerado: data/raw/search_albums_scorpion.xlsx")
 print(df_albuns.head())
 
-# ==========================
-# 4. Search Playlists
-# ==========================
+# 4. Procurar Playlists
+
 playlists = api.search_playlists(
     playlist_name="Top Brasil",
     limit=10,
