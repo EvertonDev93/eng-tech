@@ -93,6 +93,16 @@ salvar_dataframe_excel(
 print("Arquivo gerado: data/raw/search_playlists_top_brasil.xlsx")
 print(df_playlists.head())
 
+df_user = api.get_current_user_profile_df()
+
+salvar_dataframe_excel(
+    df=df_user,
+    caminho_saida=pasta_saida / "user_profile.xlsx"
+)
+
+print("Arquivo gerado: user_profile.xlsx")
+print(df_user.head())
+
 print("\nTodos os arquivos foram gerados com sucesso.")
 
 # Marca o fim
