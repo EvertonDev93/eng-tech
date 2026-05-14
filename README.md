@@ -1,6 +1,6 @@
 # 📊 EngTech: Inteligência de Dados para Sobrevivência Empresarial
 
-**Projeto de TCC – MBA em Engenharia de Dados**
+**Projeto de TCC em Engenharia de Dados com abordagem prática (Hands On), focado na construção de uma solução de dados end-to-end para análise de risco empresarial no Brasil.**
 
 ### 👥 Integrantes
 
@@ -44,7 +44,7 @@ Para solucionar a fragmentação e detalhar a origem técnica, as fontes de dado
 
 Para garantir um fluxo coeso e evitar o isolamento de informações, a arquitetura conecta todas as etapas:
 
-**[Inserir aqui a imagem: Fluxo.de.Processo.de.Coleta.jpeg]**
+**<img width="1600" height="800" alt="Fluxo de Processo de Coleta" src="https://github.com/user-attachments/assets/95c62461-e32f-4258-8026-52aa92169ade" />**
 
 1. **Ingestão:** Scripts Python automatizam o download dos ficheiros `.zip` diretamente dos links da Receita Federal.
 2. **Landing Zone (Raw):** Armazenamento dos dados brutos para garantir a linhagem e possibilidade de reprocessamento.
