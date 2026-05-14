@@ -46,7 +46,7 @@ Para garantir um fluxo coeso e evitar o isolamento de informações, a arquitetu
 
 **<img width="1024" height="483" alt="3bfe3986-00e5-41b2-afac-264bba54664e" src="https://github.com/user-attachments/assets/8c0e6574-ff3d-471a-8683-2a8ede78535e" />**
 
-1. **Ingestão:** Scripts Python automatizam o download dos ficheiros `.zip` diretamente dos links da Receita Federal.
+1. **Ingestão:** Scripts Python automatizam o download dos ficheiros `.zip` diretamente dos links da Receita Federal e salvam na pasta de download.
 2. **Landing Zone (Raw):** Armazenamento dos dados brutos para garantir a linhagem e possibilidade de reprocessamento.
 3. **Processamento (Bronze/Silver):** Descompactação e limpeza via Pandas. Aqui é realizado o **Join** crucial entre *Empresas* e *Estabelecimentos* através do `CNPJ BÁSICO`.
 4. **Data Warehouse (Gold):** Carga dos dados higienizados no **PostgreSQL**, estruturando as variáveis para o modelo de Machine Learning e para o dashboard.
