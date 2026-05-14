@@ -180,12 +180,19 @@ CREATE TABLE socios (
 );
 
 
--- =============================================================
--- ÍNDICES CRIAR APÓS IMPORTAR OS DADOS.
--- =============================================================
+-- =========================================================
+-- ESTABELECIMENTOS
+-- =========================================================
 
 CREATE INDEX idx_estabelecimentos_cnpj_basico
 ON estabelecimentos (cnpj_basico);
+
+CREATE INDEX idx_estabelecimentos_cnpj_completo
+ON estabelecimentos (
+    cnpj_basico,
+    cnpj_ordem,
+    cnpj_dv
+);
 
 CREATE INDEX idx_estabelecimentos_uf
 ON estabelecimentos (uf);
@@ -200,12 +207,26 @@ CREATE INDEX idx_estabelecimentos_data_inicio
 ON estabelecimentos (data_inicio_atividade);
 
 
+-- =========================================================
+-- EMPRESAS
+-- =========================================================
+
+CREATE INDEX idx_empresas_cnpj_basico
+ON empresas (cnpj_basico);
+
 CREATE INDEX idx_empresas_natureza
 ON empresas (natureza_juridica);
 
 CREATE INDEX idx_empresas_porte
 ON empresas (porte_empresa);
 
+
+-- =========================================================
+-- SIMPLES
+-- =========================================================
+
+CREATE INDEX idx_simples_cnpj_basico
+ON simples (cnpj_basico);
 
 CREATE INDEX idx_simples_opcao
 ON simples (opcao_simples);
@@ -214,15 +235,25 @@ CREATE INDEX idx_simples_mei
 ON simples (opcao_mei);
 
 
+-- =========================================================
+-- SOCIOS
+-- =========================================================
+
+CREATE INDEX idx_socios_cnpj_basico
+ON socios (cnpj_basico);
+
 CREATE INDEX idx_socios_qualificacao
 ON socios (qualif_socio);
 
 CREATE INDEX idx_socios_data_entrada
 ON socios (data_entrada_sociedade);
 
+-- Executar somente após criacao dos index, executar um por vez
 
--- =============================================================
--- ESTATÍSTICAS
--- =============================================================
+VACUUM ANALYZE estabelecimentos;
 
-ANALYZE;
+VACUUM ANALYZE empresas;
+
+VACUUM ANALYZE simples;
+
+VACUUM ANALYZE socios;
