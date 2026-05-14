@@ -46,10 +46,17 @@ Para garantir um fluxo coeso e evitar o isolamento de informações, a arquitetu
 
 **<img width="1024" height="483" alt="3bfe3986-00e5-41b2-afac-264bba54664e" src="https://github.com/user-attachments/assets/8c0e6574-ff3d-471a-8683-2a8ede78535e" />**
 
-1. **Ingestão:** Scripts Python automatizam o download dos ficheiros `.zip` diretamente dos links da Receita Federal e salvam na pasta de download.
-2. **Landing Zone (Raw):** Armazenamento dos dados brutos para garantir a linhagem e possibilidade de reprocessamento.
-3. **Processamento (Bronze/Silver):** Descompactação e limpeza via Pandas. Aqui é realizado o **Join** crucial entre *Empresas* e *Estabelecimentos* através do `CNPJ BÁSICO`.
-4. **Data Warehouse (Gold):** Carga dos dados higienizados no **PostgreSQL**, estruturando as variáveis para o modelo de Machine Learning e para o dashboard.
+A arquitetura foi desenhada para ser eficiente e direta, utilizando Python como motor de execução e o PostgreSQL como repositório para todas as camadas de dados (Medallion Architecture).
+
+Ingestão: Scripts Python automatizam o acesso aos links da Receita Federal, realizando o download dos ficheiros .zip diretamente para uma pasta local de downloads.
+
+Landing Zone (Raw): Os arquivos compactados são mantidos em armazenamento local para garantir a linhagem dos dados (data lineage) e permitir o reprocessamento sem a necessidade de novos downloads.
+
+Camada Bronze (Staging): Através de scripts Python, os dados brutos são extraídos e carregados para tabelas de estágio no PostgreSQL. Nesta camada, os dados mantêm sua estrutura original para auditoria.
+
+Processamento e Camada Silver (Trusted): Utilizando a biblioteca Pandas, o pipeline realiza a leitura da Camada Bronze para executar a limpeza, normalização e conversão de tipos (ex: datas e valores numéricos). É nesta etapa que ocorre o Join crucial entre as tabelas EMPRESAS e ESTABELECIMENTOS através do CNPJ BÁSICO, persistindo o resultado na Camada Silver do PostgreSQL.
+
+Data Warehouse (Gold): Carga dos dados higienizados e enriquecidos em tabelas finais, estruturando as variáveis necessárias para o treinamento do modelo de Machine Learning e para o consumo de alta performance pelos dashboards.
 
 ## 🧠 4. Dicionário de Dados e Engenharia de Features
 
