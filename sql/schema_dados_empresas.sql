@@ -178,3 +178,51 @@ CREATE TABLE socios (
         faixa_etaria IN ('0','1','2','3','4','5','6','7','8','9')
     )
 );
+
+
+-- =============================================================
+-- ÍNDICES CRIAR APÓS IMPORTAR OS DADOS.
+-- =============================================================
+
+CREATE INDEX idx_estabelecimentos_cnpj_basico
+ON estabelecimentos (cnpj_basico);
+
+CREATE INDEX idx_estabelecimentos_uf
+ON estabelecimentos (uf);
+
+CREATE INDEX idx_estabelecimentos_cnae
+ON estabelecimentos (cnae_fiscal_principal);
+
+CREATE INDEX idx_estabelecimentos_situacao
+ON estabelecimentos (situacao_cadastral);
+
+CREATE INDEX idx_estabelecimentos_data_inicio
+ON estabelecimentos (data_inicio_atividade);
+
+
+CREATE INDEX idx_empresas_natureza
+ON empresas (natureza_juridica);
+
+CREATE INDEX idx_empresas_porte
+ON empresas (porte_empresa);
+
+
+CREATE INDEX idx_simples_opcao
+ON simples (opcao_simples);
+
+CREATE INDEX idx_simples_mei
+ON simples (opcao_mei);
+
+
+CREATE INDEX idx_socios_qualificacao
+ON socios (qualif_socio);
+
+CREATE INDEX idx_socios_data_entrada
+ON socios (data_entrada_sociedade);
+
+
+-- =============================================================
+-- ESTATÍSTICAS
+-- =============================================================
+
+ANALYZE;
