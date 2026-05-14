@@ -1,127 +1,81 @@
-# 📊 EngTech
+# 📊 EngTech: Inteligência de Dados para Sobrevivência Empresarial
 
-Projeto de TCC em Engenharia de Dados com abordagem prática (Hands On), focado na construção de uma solução de dados end-to-end para análise de risco empresarial no Brasil.
+**Projeto de TCC – MBA em Engenharia de Dados**
 
----
+### 👥 Integrantes
 
-## 🚀 Visão Geral
-
-Este projeto apresenta o desenvolvimento completo de uma solução de dados para responder a um problema real de negócio: **qual a probabilidade de uma empresa encerrar suas atividades nos primeiros 5 anos de vida e o impacto de fatores externos**.
-
-A análise é baseada em variáveis estruturais como:
-
-* CNAE (atividade econômica)
-* Capital social
-* Região
-
-O projeto integra conceitos de Engenharia de Dados, Análise de Dados e Machine Learning.
+* **Davi Araujo** - 10731795
+* **Rafael Cruz** - 10732175
+* **Everton Ribeiro** - 10732297
+* **Felipe Santana** - 10732452
+* **Erickson Silva** - 10732435
+* **Leonardo Gomes** - 10731860
 
 ---
 
-## 🎯 Tema do Projeto
+## 🚀 1. Visão Geral e Contexto de Negócio
 
-### Probabilidade de Falência de Empresas nos Primeiros 5 Anos e impactor de fatores externos
+A taxa de mortalidade de empresas no Brasil é um fator crítico para o desenvolvimento econômico. Este projeto apresenta uma solução de dados completa para responder a um problema real: **qual a probabilidade de uma empresa encerrar as suas atividades nos primeiros 5 anos de vida?**
 
----
+A análise utiliza variáveis estruturais, financeiras e regionais para identificar padrões que expliquem este fenómeno, permitindo uma tomada de decisão baseada em dados para empreendedores e investidores.
 
-## 👥 Integrantes
+## 🔗 2. Detalhamento das Fontes de Dados (Data Sources)
 
-* Davi Araujo - 10731795
-* Rafael Cruz - 10732175
-* Everton Ribeiro - 10732297
-* Felipe Santana - 10732452
-* Erickson Silva - 10732435
-* Leonardo Gomes - 10731860
+Para solucionar a fragmentação e detalhar a origem técnica, as fontes de dados foram mapeadas diretamente dos repositórios oficiais:
 
----
+* **Repositório de Arquivos (RFB):** [Arquivos Receita Federal](https://arquivos.receitafederal.gov.br/index.php/s/YggdBLfdninEJX9?dir=/2025-10)
+* *O que é:* Servidor que aloja os ficheiros brutos compactados (.zip). É a fonte primária de onde o pipeline extrai os dados mensalmente.
 
-## 🧠 Contexto de Negócio
 
-A taxa de mortalidade de empresas no Brasil é um fator crítico para o desenvolvimento econômico. Muitos negócios encerram suas atividades nos primeiros anos devido a fatores como gestão, capital insuficiente, características do setor e caracteristicas regionais.
+* **Portal de Dados Abertos (Gov.br):** [Dados.gov.br - CNPJ](https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj)
+* *O que é:* Catálogo que fornece os metadados, layouts e a descrição técnica de cada campo das tabelas.
 
-Este projeto busca analisar padrões que expliquem esse fenômeno, utilizando dados estruturados para prever o risco de falência.
 
----
 
-## ❓ Problema de Negócio
+### 🗺️ Mapeamento de Tabelas vs. Arquivos
 
-Qual a probabilidade de uma empresa encerrar suas atividades nos primeiros 5 anos, considerando:
+| Nome da Tabela | Arquivo de Origem (RFB) | Conteúdo e Aplicação no Projeto |
+| --- | --- | --- |
+| **EMPRESAS** | `K3241.K0312.V1.EMPRE.D...zip` | Dados estruturais: Capital Social, Natureza Jurídica e Porte. |
+| **ESTABELECIMENTOS** | `K3241.K0312.V1.ESTABELE.D...zip` | Dados de operação: CNAE, Situação Cadastral e Localização. |
+| **SIMPLES** | `K3241.K0312.V1.SIMPLES.D...zip` | Dados tributários: Identificação de MEI e regime Simples. |
 
-* Seu setor de atuação (CNAE)
-* Seu capital social inicial
-* Região onde a empresa foi aberta
+## 🏗️ 3. Arquitetura da Solução e Pipeline ETL
 
----
+Para garantir um fluxo coeso e evitar o isolamento de informações, a arquitetura conecta todas as etapas:
 
-## 🎯 Objetivos
+**[Inserir aqui a imagem: Fluxo.de.Processo.de.Coleta.jpeg]**
 
-* Integrar dados de fontes públicas e/ou empresariais
-* Construir um pipeline de dados escalável
-* Analisar padrões de sobrevivência empresarial
-* Desenvolver um modelo preditivo de risco
-* Identificar setores com maior taxa de mortalidade
-* Gerar insights estratégicos para tomada de decisão
+1. **Ingestão:** Scripts Python automatizam o download dos ficheiros `.zip` diretamente dos links da Receita Federal.
+2. **Landing Zone (Raw):** Armazenamento dos dados brutos para garantir a linhagem e possibilidade de reprocessamento.
+3. **Processamento (Bronze/Silver):** Descompactação e limpeza via Pandas. Aqui é realizado o **Join** crucial entre *Empresas* e *Estabelecimentos* através do `CNPJ BÁSICO`.
+4. **Data Warehouse (Gold):** Carga dos dados higienizados no **PostgreSQL**, estruturando as variáveis para o modelo de Machine Learning e para o dashboard.
 
----
+## 🧠 4. Dicionário de Dados e Engenharia de Features
 
-## 🏗️ Arquitetura da Solução
+Com base no critério de seleção técnica, o modelo foca nas variáveis de maior impacto preditivo:
 
-### 🔄 Pipeline de Dados
+* **Variável Alvo (Target):** `SITUAÇÃO CADASTRAL` (Ativa/Baixada) processada com a `DATA DA SITUAÇÃO` para definir a falência em até 5 anos.
+* **Features Selecionadas:**
+* `CAPITAL SOCIAL`: Indicador de resistência financeira.
+* `CNAE FISCAL`: Setor económico de atuação.
+* `NATUREZA JURÍDICA`: Estrutura legal da empresa.
+* `UF / MUNICÍPIO`: Contexto económico regional.
+* `PORTE DA EMPRESA`: Tamanho e resiliência no mercado.
 
-| Etapa           | Descrição                                 |
-| --------------- | ----------------------------------------- |
-| Ingestão        | Coleta de dados empresariais              |
-| Data Lake (Raw) | Armazenamento de dados brutos             |
-| Processamento   | Limpeza e transformação                   |
-| Data Warehouse  | Dados estruturados (PostgreSQL)           |
-| Modelagem       | Machine Learning (classificação de risco) |
-| Visualização    | Dashboards (Power BI / Streamlit)         |
 
----
 
-## 🧰 Tecnologias Utilizadas
+## 🧰 5. Tecnologias Utilizadas
 
-* Python (pandas, numpy, scikit-learn, PyCaret)
-* SQL
-* PostgreSQL
-* Power BI
-* Streamlit
-* Git & GitHub
+* **Linguagens:** Python (Pandas, Scikit-Learn) e SQL.
+* **Armazenamento:** PostgreSQL (Data Warehouse).
+* **Visualização:** Power BI e Streamlit.
+* **Versionamento:** Git & GitHub.
+
+## 📊 6. Resultados Esperados
+
+* **Modelo Preditivo de Risco:** Algoritmo capaz de classificar a probabilidade de falência com base nos dados de registo.
+* **Dashboard Executivo:** Visualização geográfica e setorial da mortalidade empresarial no Brasil.
+* **Simulador de Viabilidade:** Interface em Streamlit onde o utilizador insere dados de uma nova empresa e recebe uma análise de risco imediata.
 
 ---
-
-## 📂 Estrutura do Projeto
-
-```
-├── data/
-│   ├── raw/
-│   ├── processed/
-│   └── external/
-├── notebooks/
-├── src/
-├── dashboards/
-├── reports/
-├── README.md
-└── requirements.txt
-```
-
----
-
-## 🔎 Metodologia
-
-1. Coleta de dados empresariais
-2. Tratamento e limpeza
-3. Análise exploratória (EDA)
-4. Engenharia de features (CNAE, capital social, tempo de vida)
-5. Modelagem preditiva (classificação)
-6. Avaliação de modelos
-7. Geração de insights
-
----
-
-## 📊 Resultados Esperados
-
-* Probabilidade de falência por setor (CNAE)
-* Impacto do capital social na sobrevivência
-* Identificação de setores de alto risco
-* Modelo preditivo de apoio à decisão
