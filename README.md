@@ -1,192 +1,127 @@
+# 📊 EngTech
 
-# EngTech
-
-Projeto final do MBA em Engenharia de Dados, com abordagem prática (Hands On) voltada aos fundamentos de dados e Big Data.
-
-## Sobre o Projeto
-
-Este repositório contém o desenvolvimento do trabalho final do MBA em Engenharia de Dados, com foco na aplicação prática de conceitos fundamentais da área, incluindo processamento de dados em larga escala e construção de pipelines de dados.
-
-# 🎧 MusicMatch Analytics – Plataforma de Recomendação Musical
-
-## 1. Nome do Projeto
-**MusicMatch Analytics – Plataforma de Recomendação Musical**
+Projeto de TCC em Engenharia de Dados com abordagem prática (Hands On), focado na construção de uma solução de dados end-to-end para análise de risco empresarial no Brasil.
 
 ---
 
-## 2. Integrantes
+## 🚀 Visão Geral
 
-- Davi Araujo - 10731795  
-- Rafael Cruz - 10732175  
-- Everton Ribeiro - 10732297  
-- Felipe Santana - 10732452  
-- Erickson Silva - 10732435  
-- Leonardo Gomes - 10731860  
+Este projeto apresenta o desenvolvimento completo de uma solução de dados para responder a um problema real de negócio: **qual a probabilidade de uma empresa encerrar suas atividades nos primeiros 5 anos de vida e o impacto de fatores externos**.
 
----
+A análise é baseada em variáveis estruturais como:
 
-## 3. Contextualização
+* CNAE (atividade econômica)
+* Capital social
+* Região
 
-Com o crescimento das plataformas de streaming, os usuários consomem uma grande quantidade de músicas diariamente. No entanto, a descoberta de novas músicas alinhadas ao gosto pessoal ainda pode ser limitada.
-
-Este projeto propõe o desenvolvimento de uma plataforma baseada em dados que coleta informações da API do Spotify, organiza esses dados em um banco estruturado e utiliza técnicas de análise e Machine Learning para recomendar músicas similares com base em padrões identificados.
+O projeto integra conceitos de Engenharia de Dados, Análise de Dados e Machine Learning.
 
 ---
 
-## 4. Problema a Ser Resolvido
+## 🎯 Tema do Projeto
 
-Como recomendar músicas relevantes para um usuário com base em dados reais, considerando características musicais, artistas e padrões existentes na base?
-
----
-
-## 5. Objetivo do Projeto
-
-Desenvolver uma solução completa que:
-
-- Coleta dados musicais via API do Spotify  
-- Armazena e estrutura esses dados em um banco PostgreSQL  
-- Realiza análises exploratórias dos dados  
-- Disponibiliza dashboards analíticos no Power BI  
-- Permite interação via Streamlit  
-- Aplica um modelo de recomendação baseado em similaridade  
+### Probabilidade de Falência de Empresas nos Primeiros 5 Anos e impactor de fatores externos
 
 ---
 
-## 6. Arquitetura da Solução
+## 👥 Integrantes
 
-### Fluxo de Dados
-
-
-### Descrição
-
-- **Spotify API**: Fonte de dados (artistas, álbuns, músicas)  
-- **Python**: Coleta, tratamento e ingestão dos dados  
-- **PostgreSQL**: Armazenamento estruturado  
-- **Power BI**: Visualização e análise dos dados  
-- **Streamlit**: Interface interativa  
-- **Machine Learning**: Recomendação de músicas  
+* Davi Araujo - 10731795
+* Rafael Cruz - 10732175
+* Everton Ribeiro - 10732297
+* Felipe Santana - 10732452
+* Erickson Silva - 10732435
+* Leonardo Gomes - 10731860
 
 ---
 
-## 7. Tecnologias Utilizadas
+## 🧠 Contexto de Negócio
 
-- Python (requests, pandas)  
-- API do Spotify  
-- PostgreSQL  
-- Power BI  
-- Streamlit  
-- GitHub (controle de versão)  
+A taxa de mortalidade de empresas no Brasil é um fator crítico para o desenvolvimento econômico. Muitos negócios encerram suas atividades nos primeiros anos devido a fatores como gestão, capital insuficiente, características do setor e caracteristicas regionais.
+
+Este projeto busca analisar padrões que expliquem esse fenômeno, utilizando dados estruturados para prever o risco de falência.
 
 ---
 
-## 8. Estrutura de Dados (Visão Inicial)
+## ❓ Problema de Negócio
 
-Principais entidades:
+Qual a probabilidade de uma empresa encerrar suas atividades nos primeiros 5 anos, considerando:
 
-- Artistas  
-- Álbuns  
-- Músicas  
-- Gêneros  
-- Relacionamentos entre músicas/artistas  
+* Seu setor de atuação (CNAE)
+* Seu capital social inicial
+* Região onde a empresa foi aberta
 
 ---
 
-## 9. Funcionamento do Sistema (Streamlit)
+## 🎯 Objetivos
 
-O usuário não digita informações manualmente.
-
-A interface será baseada em **dropdowns (listas suspensas)** alimentados diretamente do banco PostgreSQL.
-
-### O usuário poderá selecionar:
-
-- Artista  
-- Música  
-- Gênero  
-- Filtros adicionais (ex: popularidade, quantidade de recomendações)  
-
-### Resultado:
-
-O sistema retorna uma lista de músicas recomendadas com base em similaridade.
+* Integrar dados de fontes públicas e/ou empresariais
+* Construir um pipeline de dados escalável
+* Analisar padrões de sobrevivência empresarial
+* Desenvolver um modelo preditivo de risco
+* Identificar setores com maior taxa de mortalidade
+* Gerar insights estratégicos para tomada de decisão
 
 ---
 
-## 10. Estratégia de Machine Learning
+## 🏗️ Arquitetura da Solução
 
-Será utilizado um modelo de recomendação baseado em similaridade entre itens (**content-based filtering**).
+### 🔄 Pipeline de Dados
 
-A recomendação será feita considerando atributos como:
-
-- Artista  
-- Gênero  
-- Popularidade  
-- Relações entre músicas  
-
-> Caso disponível via API, poderão ser utilizados atributos adicionais.
-
----
-
-## 11. Etapas do Projeto
-
-### Etapa 1 – Processamento e Ingestão
-
-- Conexão com API do Spotify  
-- Coleta de dados (artistas, álbuns, músicas)  
-- Tratamento e normalização dos dados  
-- Armazenamento no PostgreSQL  
-
-### Etapa 2 – Análise Exploratória e Limpeza
-
-- Remoção de duplicidades  
-- Padronização dos dados  
-- Criação de relações entre entidades  
-- Desenvolvimento de dashboards no Power BI  
-
-### Etapa 3 – Machine Learning e Aplicação
-
-- Implementação do modelo de recomendação  
-- Desenvolvimento da interface no Streamlit  
-- Integração com banco de dados  
-- Exibição das recomendações  
+| Etapa           | Descrição                                 |
+| --------------- | ----------------------------------------- |
+| Ingestão        | Coleta de dados empresariais              |
+| Data Lake (Raw) | Armazenamento de dados brutos             |
+| Processamento   | Limpeza e transformação                   |
+| Data Warehouse  | Dados estruturados (PostgreSQL)           |
+| Modelagem       | Machine Learning (classificação de risco) |
+| Visualização    | Dashboards (Power BI / Streamlit)         |
 
 ---
 
-## 12. Análises Esperadas (Power BI)
+## 🧰 Tecnologias Utilizadas
 
-- Artistas mais populares  
-- Distribuição de gêneros  
-- Relação entre artistas e músicas  
-- Volume de músicas por artista  
-- Insights sobre padrões musicais  
-
----
-
-## 13. Diferencial do Projeto
-
-- Uso de dados reais via API  
-- Integração completa (API + Banco + BI + App)  
-- Interface interativa com Streamlit  
-- Aplicação prática de Machine Learning  
-- Arquitetura alinhada com Engenharia de Dados  
+* Python (pandas, numpy, scikit-learn, PyCaret)
+* SQL
+* PostgreSQL
+* Power BI
+* Streamlit
+* Git & GitHub
 
 ---
 
-## 14. Riscos e Mitigações
+## 📂 Estrutura do Projeto
 
-| Risco                          | Mitigação                              |
-|--------------------------------|----------------------------------------|
-| Limitações da API do Spotify   | Persistência dos dados no PostgreSQL   |
-| Escopo muito amplo             | Foco em recomendação por similaridade  |
+```
+├── data/
+│   ├── raw/
+│   ├── processed/
+│   └── external/
+├── notebooks/
+├── src/
+├── dashboards/
+├── reports/
+├── README.md
+└── requirements.txt
+```
+
+---
+
+## 🔎 Metodologia
+
+1. Coleta de dados empresariais
+2. Tratamento e limpeza
+3. Análise exploratória (EDA)
+4. Engenharia de features (CNAE, capital social, tempo de vida)
+5. Modelagem preditiva (classificação)
+6. Avaliação de modelos
+7. Geração de insights
 
 ---
 
-## 15. Conclusão
+## 📊 Resultados Esperados
 
-O projeto demonstra na prática todo o ciclo de dados:
-
-- Coleta  
-- Armazenamento  
-- Tratamento  
-- Análise  
-- Aplicação com Machine Learning  
-
----
+* Probabilidade de falência por setor (CNAE)
+* Impacto do capital social na sobrevivência
+* Identificação de setores de alto risco
+* Modelo preditivo de apoio à decisão
