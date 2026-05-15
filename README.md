@@ -46,17 +46,19 @@ Para garantir um fluxo coeso e evitar o isolamento de informações, a arquitetu
 
 **<img width="2986" height="1408" alt="Diagrama Atualziado" src="https://github.com/user-attachments/assets/0f7a043c-1e01-42ee-880d-d568763a40a7" />**
 
-A arquitetura foi desenhada para ser eficiente e direta, utilizando Python como motor de execução e o PostgreSQL como repositório para todas as camadas de dados (Medallion Architecture).
+Com certeza! Com base na nova arquitetura e no detalhamento do seu pipeline ETL (onde o processamento central migrou do Pandas/Python para comandos SQL nativos dentro do PostgreSQL), aqui está o texto atualizado e corrigido para refletir o novo fluxo:
 
-Ingestão: Scripts Python automatizam o acesso aos links da Receita Federal, realizando o download dos ficheiros .zip diretamente para uma pasta local de downloads.
+🏗️ 3. Arquitetura da Solução e Pipeline ETL
 
-Landing Zone (Raw): Os arquivos compactados são mantidos em armazenamento local para garantir a linhagem dos dados (data lineage) e permitir o reprocessamento sem a necessidade de novos downloads.
+A arquitetura da solução foi projetada para ser altamente eficiente e robusta, utilizando orquestração via script batch (EXECUTAR.BAT) e as poderosas capacidades nativas do PostgreSQL para todo o processamento de dados (Medallion Architecture). A nova abordagem remove a dependência do Pandas/Python para transformações, priorizando o processamento "in-database" para maior performance.
 
-Camada Bronze (Staging): Através de scripts Python, os dados brutos são extraídos e carregados para tabelas de estágio no PostgreSQL. Nesta camada, os dados mantêm sua estrutura original para auditoria.
+Ingestão e Landing Zone (Raw): O fluxo de dados brutos inicia-se a partir de repositórios locais (C:/rfb/), onde se encontram os arquivos compactados (.zip) e descompactados (.csv). A Landing Zone é constituída por este diretório local, garantindo a linhagem dos dados e permitindo o reprocessamento rápido sem a necessidade de novos downloads.
 
-Processamento e Camada Silver (Trusted): Utilizando a biblioteca Pandas, o pipeline realiza a leitura da Camada Bronze para executar a limpeza, normalização e conversão de tipos (ex: datas e valores numéricos). É nesta etapa que ocorre o Join crucial entre as tabelas EMPRESAS e ESTABELECIMENTOS através do CNPJ BÁSICO, persistindo o resultado na Camada Silver do PostgreSQL.
+Camada Bronze (Staging Area): A ingestão é orquestrada por um arquivo .bat que aciona um Script Python executado em terminal. Através de comandos \copy SQL nativos, a tarefa automatizada realiza o carregamento direto dos dados dos ficheiros .csv para tabelas de estágio no PostgreSQL. Nesta Camada Bronze, os dados são mantidos em tabelas de estágio separadas (empresas_bruta, estabelecimentos_bruta, paises_bruta, etc.), persistindo sua estrutura original de texto (LATIN1) para auditoria e linhagem.
 
-Data Warehouse (Gold): Carga dos dados higienizados e enriquecidos em tabelas finais, estruturando as variáveis necessárias para o treinamento do modelo de Machine Learning e para o consumo de alta performance pelos dashboards.
+Processamento e Camada Silver (Trusted): A fase de processamento é realizada exclusivamente dentro do PostgreSQL, utilizando comandos SQL nativos e T-SQL para as transformações. O pipeline executa a leitura das tabelas da Camada Bronze para executar: tipagem de datas (TO_DATE de 'YYYYMMDD' para date, com verificação de NULL), tipagem numérica (capital social), conversão de encoding (LATIN1 para UTF-8), e normalização de texto (limpeza). Os dados higienizados e tipados são persistidos na Camada Silver em suas respectivas tabelas normalizadas (empresas, estabelecimentos, cnaes, municipios, simples), sem Joins pré-processados, sendo um repositório confiável, estruturado e normalizado.
+
+Data Warehouse (Gold Ready): Os dados normalizados e confiáveis na Camada Silver estão prontos para o enriquecimento e a estruturação de visões denormalizadas na futura Camada Gold. Esta fase final será responsável pela criação de variáveis para o treinamento de modelos de Machine Learning e pelo fornecimento de dados de alta performance para o consumo por dashboards analíticos.
 
 ## 🧠 4. Dicionário de Dados e Engenharia de Features
 
