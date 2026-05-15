@@ -25,8 +25,8 @@ A análise utiliza variáveis estruturais, financeiras e regionais para identifi
 
 Para solucionar a fragmentação e detalhar a origem técnica, as fontes de dados foram mapeadas diretamente dos repositórios oficiais:
 
-* **Repositório de Arquivos (RFB):** *Arquivos Receita Federal* Servidor público que hospeda os arquivos brutos compactados (`.zip`). É a fonte primária de onde o pipeline extrai os dados de forma massiva.
-* **Portal de Dados Abertos (Gov.br):** *Dados.gov.br - CNPJ* Catálogo oficial que fornece os metadados, layouts técnicos e a descrição detalhada de cada campo das tabelas.
+* **Repositório de Arquivos (RFB):** *Arquivos Receita Federal* Servidor público que hospeda os arquivos brutos compactados (`.zip`). É a fonte primária de onde o pipeline extrai os dados de forma massiva. https://arquivos.receitafederal.gov.br/index.php/s/YggdBLfdninEJX9?dir=/2025-10
+* **Portal de Dados Abertos (Gov.br):** *Dados.gov.br - CNPJ* Catálogo oficial que fornece os metadados, layouts técnicos e a descrição detalhada de cada campo das tabelas. https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj
 
 ### 🗺️ Mapeamento de Tabelas vs. Arquivos Originais
 
