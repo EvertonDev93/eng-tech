@@ -1,0 +1,75 @@
+Segue as querys já aplicadas n o banco conforme combinado, para organizar depois no git.
+
+-- Querys
+
+-- Estabelecimento - DROP de colunas desnecessarias para analise
+
+ALTER TABLE estabelecimentos
+DROP COLUMN IF EXISTS ddd1,
+DROP COLUMN IF EXISTS telefone1,
+DROP COLUMN IF EXISTS ddd2,
+DROP COLUMN IF EXISTS telefone2,
+DROP COLUMN IF EXISTS ddd_fax,
+DROP COLUMN IF EXISTS fax,
+DROP COLUMN IF EXISTS correio_eletronico,
+DROP COLUMN IF EXISTS logradouro,
+DROP COLUMN IF EXISTS tipo_logradouro,
+DROP COLUMN IF EXISTS complemento,
+DROP COLUMN IF EXISTS numero,
+DROP COLUMN IF EXISTS cep,
+DROP COLUMN IF EXISTS bairro,
+DROP COLUMN IF EXISTS cidade_exterior;
+
+-- Socios - DROP de colunas.
+
+ALTER TABLE socios
+DROP COLUMN IF EXISTS nome_socio,
+DROP COLUMN IF EXISTS cnpj_cpf_socio,
+DROP COLUMN IF EXISTS representante_legal,
+DROP COLUMN IF EXISTS nome_representante;
+
+-- Outliers (Cidade exterior com código Brasil)
+
+DELETE FROM estabelecimentos
+WHERE uf = 'EX'
+AND pais = '105';
+
+
+-- Deletar linhas de estabelecimentos onde há ausencia de cnpj
+
+delete FROM estabelecimentos
+WHERE (cnpj_basico IS NULL OR TRIM(cnpj_basico) = '')
+AND (cnpj_ordem IS NULL OR TRIM(cnpj_ordem) = '')
+AND (cnpj_dv IS NULL OR TRIM(cnpj_dv) = '');
+
+
+-- Coluna indicando se a empresa foi aberta a mais de 5 anos
+ALTER TABLE estabelecimentos
+ADD COLUMN empresa_mais_5_anos BOOLEAN;
+
+UPDATE estabelecimentos
+SET empresa_mais_5_anos =
+    data_inicio_atividade <= DATE '2025-11-30' - INTERVAL '5 years';
+
+
+-- JOIN DO CNPJ BASICO ENTRE AS TABELAS
+-- INNER JOIN TRAZ SOMENTE SE EXISTIR EM TODAS AS TABELAS
+SELECT *
+FROM estabelecimentos e
+INNER JOIN empresas emp
+    ON e.cnpj_basico = emp.cnpj_basico
+INNER JOIN socios s
+    ON e.cnpj_basico = s.cnpj_basico
+INNER JOIN simples si
+    ON e.cnpj_basico = si.cnpj_basico;
+
+
+-- FULL OUTER JOIN TRAZ TUDO, INCLUSIVE REGISTROS ORFAOS SEM CORRESPONDENCIA
+SELECT *
+FROM estabelecimentos e
+FULL OUTER JOIN empresas emp
+    ON e.cnpj_basico = emp.cnpj_basico
+FULL OUTER JOIN socios s
+    ON COALESCE(e.cnpj_basico, emp.cnpj_basico) = s.cnpj_basico
+FULL OUTER JOIN simples si
+    ON COALESCE(e.cnpj_basico, emp.cnpj_basico, s.cnpj_basico) = si.cnpj_basico;
