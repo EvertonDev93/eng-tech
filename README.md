@@ -1,15 +1,19 @@
+Aqui está o documento do seu TCC completamente revisado, estruturado e formatado em Markdown de alta qualidade, pronto para ser utilizado diretamente no seu relatório final, artigo acadêmico ou no arquivo `README.md` do repositório no GitHub.
+
+---
+
 # 📊 EngTech: Inteligência de Dados para Sobrevivência Empresarial
 
 **Projeto de TCC em Engenharia de Dados** *Abordagem prática (Hands-On) focada na construção de uma solução de dados end-to-end para análise de risco empresarial no Brasil.*
 
 ### 👥 Integrantes
 
-* Davi Araujo – 10731795
-* Rafael Cruz – 10732175
-* Everton Ribeiro – 10732297
-* Felipe Santana – 10732452
-* Erickson Silva – 10732435
-* Leonardo Gomes – 10731860
+* **Davi Araujo** – 10731795
+* **Rafael Cruz** – 10732175
+* **Everton Ribeiro** – 10732297
+* **Felipe Santana** – 10732452
+* **Erickson Silva** – 10732435
+* **Leonardo Gomes** – 10731860
 
 ---
 
@@ -25,8 +29,10 @@ A análise utiliza variáveis estruturais, financeiras e regionais para identifi
 
 Para solucionar a fragmentação e detalhar a origem técnica, as fontes de dados foram mapeadas diretamente dos repositórios oficiais:
 
-* **Repositório de Arquivos (RFB):** *Arquivos Receita Federal* Servidor público que hospeda os arquivos brutos compactados (`.zip`). É a fonte primária de onde o pipeline extrai os dados de forma massiva. https://arquivos.receitafederal.gov.br/index.php/s/YggdBLfdninEJX9?dir=/2025-10
-* **Portal de Dados Abertos (Gov.br):** *Dados.gov.br - CNPJ* Catálogo oficial que fornece os metadados, layouts técnicos e a descrição detalhada de cada campo das tabelas. https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj
+* **Repositório de Arquivos (RFB):** [Arquivos Receita Federal](https://arquivos.receitafederal.gov.br/index.php/s/YggdBLfdninEJX9?dir=/2025-10)
+*Servidor público que hospeda os arquivos brutos compactados (`.zip`). É a fonte primária de onde o pipeline extrai os dados de forma massiva.*
+* **Portal de Dados Abertos (Gov.br):** [Dados.gov.br - CNPJ](https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj)
+*Catálogo oficial que fornece os metadados, layouts técnicos e a descrição detalhada de cada campo das tabelas.*
 
 ### 🗺️ Mapeamento de Tabelas vs. Arquivos Originais
 
@@ -42,7 +48,7 @@ Para solucionar a fragmentação e detalhar a origem técnica, as fontes de dado
 
 A arquitetura da solução foi projetada para ser altamente eficiente e robusta, utilizando orquestração via script batch (`EXECUTAR.BAT`) e as poderosas capacidades nativas do **PostgreSQL** para todo o processamento de dados (**Medallion Architecture**). A abordagem prioriza o processamento *in-database* (ELT) para garantir máxima performance com grandes volumes de dados.
 
-<img width="2986" height="1408" alt="Diagrama Atualziado" src="https://github.com/user-attachments/assets/566148d3-632a-4c05-b0e9-3bc185081ce4" />
+<img width="2986" height="1408" alt="Diagrama Atualziado" src="https://github.com/user-attachments/assets/41ad67ef-be71-4acd-b0a0-2db6ddbc406c" />
 
 * **Ingestão e Landing Zone (Raw):** O fluxo de dados brutos inicia-se a partir de repositórios locais (`C:/rfb/`), onde se encontram os arquivos compactados (`.zip`) e descompactados (`.csv`). A Landing Zone é constituída por este diretório local, garantindo a linhagem dos dados (*data lineage*) e permitindo o reprocessamento rápido sem a necessidade de novos downloads.
 * **Camada Bronze (Staging Area):** A ingestão é orquestrada por um arquivo `.bat` que aciona um script Python executado via terminal. Através de comandos SQL nativos `\copy`, a tarefa automatizada realiza o carregamento direto dos dados dos arquivos `.csv` para as tabelas de estágio no PostgreSQL. Nesta camada, os dados mantêm sua estrutura original de texto (`LATIN1`) para fins de auditoria.
@@ -50,7 +56,7 @@ A arquitetura da solução foi projetada para ser altamente eficiente e robusta,
 1. **Tipagem de Datas:** Conversão via `TO_DATE` (padrão `YYYYMMDD` para `DATE`), com tratamento de inconsistências para `NULL`.
 2. **Tipagem Numérica:** Tratamento do campo de capital social (substituição de `,` por `.` e conversão para `numeric`).
 3. **Conversão de Encoding:** Transição assistida de `LATIN1` para `UTF-8`.
-4. **Normalização:** Limpeza de strings e strings vazias.
+4. **Normalização:** Limpeza de strings e remoção de registros vazios.
 
 
 Os dados higienizados são persistidos na Camada Silver em suas respectivas tabelas normalizadas (`empresas`, `estabelecimentos`, `cnaes`, `municipios`, `simples`), sem joins pré-processados, consolidando um repositório confiável e limpo.
@@ -62,13 +68,13 @@ Os dados higienizados são persistidos na Camada Silver em suas respectivas tabe
 
 Com base no critério de seleção técnica, o modelo preditivo focará nas variáveis de maior impacto para o negócio:
 
-* **Variável Alvo (Target):** `SITUAÇÃO CADASTRAL` (Ativa / Baixada) combinada com a `DATA DA SITUAÇÃO CADASTRAL` para determinar matematicamente a ocorrência de falência/encerramento em até 5 anos.
+* **Variável Alvo (Target):** `SITUAÇÃO CADASTRAL` (Ativa / Baixada) combinada com a `DATA DA SITUAÇÃO CADASTRAL` para determinar matematicamente a ocorrência de falência/encerramento em até 5 anos de atividade.
 * **Features Selecionadas:**
-* **CAPITAL SOCIAL:** Indicador de robustez e resistência financeira inicial.
+* **CAPITAL SOCIAL:** Indicador de robustez e resistência financeira inicial da empresa.
 * **CNAE FISCAL:** Setor econômico de atuação (indústria, comércio, serviços, etc.).
 * **NATUREZA JURÍDICA:** Estrutura legal da constituição empresarial (LTDA, S/A, EIRELI).
-* **UF / MUNICÍPIO:** Indicadores do contexto econômico e de mercado regional.
-* **PORTE DA EMPRESA:** Porte do negócio (Micro, Pequena ou Média/Grande).
+* **UF / MUNICÍPIO:** Indicadores do contexto econômico, infraestrutura e mercado regional.
+* **PORTE DA EMPRESA:** Classificação do porte do negócio (Micro, Pequena ou Média/Grande).
 
 
 
@@ -76,9 +82,9 @@ Com base no critério de seleção técnica, o modelo preditivo focará nas vari
 
 ## 🧰 5. Tecnologias Utilizadas
 
-* **Linguagens:** SQL (PostgreSQL Dialect) para ingestão e transformações; Python (Pandas, Scikit-Learn) focado na etapa de Ciência de Dados e Machine Learning.
+* **Linguagens:** SQL (PostgreSQL Dialect) para ingestão e transformações em banco; Python (Pandas, Scikit-Learn) focado na etapa de Ciência de Dados e Machine Learning.
 * **Armazenamento e Processamento:** PostgreSQL (atuando como repositório central das camadas Bronze e Silver).
-* **Visualização e Aplicação:** Power BI (análises executivas) e Streamlit (aplicação web).
+* **Visualização e Aplicação:** Power BI (análises executivas e dashboards BI) e Streamlit (aplicação web interativa).
 * **Versionamento:** Git & GitHub.
 
 ---
