@@ -1,5 +1,3 @@
-Aqui está o documento do seu TCC completamente revisado, estruturado e formatado em Markdown de alta qualidade, pronto para ser utilizado diretamente no seu relatório final, artigo acadêmico ou no arquivo `README.md` do repositório no GitHub.
-
 ---
 
 # 📊 EngTech: Inteligência de Dados para Sobrevivência Empresarial
