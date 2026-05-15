@@ -46,10 +46,6 @@ Para garantir um fluxo coeso e evitar o isolamento de informações, a arquitetu
 
 **<img width="2986" height="1408" alt="Diagrama Atualziado" src="https://github.com/user-attachments/assets/0f7a043c-1e01-42ee-880d-d568763a40a7" />**
 
-Com certeza! Com base na nova arquitetura e no detalhamento do seu pipeline ETL (onde o processamento central migrou do Pandas/Python para comandos SQL nativos dentro do PostgreSQL), aqui está o texto atualizado e corrigido para refletir o novo fluxo:
-
-🏗️ 3. Arquitetura da Solução e Pipeline ETL
-
 A arquitetura da solução foi projetada para ser altamente eficiente e robusta, utilizando orquestração via script batch (EXECUTAR.BAT) e as poderosas capacidades nativas do PostgreSQL para todo o processamento de dados (Medallion Architecture). A nova abordagem remove a dependência do Pandas/Python para transformações, priorizando o processamento "in-database" para maior performance.
 
 Ingestão e Landing Zone (Raw): O fluxo de dados brutos inicia-se a partir de repositórios locais (C:/rfb/), onde se encontram os arquivos compactados (.zip) e descompactados (.csv). A Landing Zone é constituída por este diretório local, garantindo a linhagem dos dados e permitindo o reprocessamento rápido sem a necessidade de novos downloads.
