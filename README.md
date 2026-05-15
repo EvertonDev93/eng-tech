@@ -44,7 +44,7 @@ Para solucionar a fragmentação e detalhar a origem técnica, as fontes de dado
 
 Para garantir um fluxo coeso e evitar o isolamento de informações, a arquitetura conecta todas as etapas:
 
-**<img width="1024" height="483" alt="3bfe3986-00e5-41b2-afac-264bba54664e" src="https://github.com/user-attachments/assets/8c0e6574-ff3d-471a-8683-2a8ede78535e" />**
+**<img width="2986" height="1408" alt="Diagrama Atualziado" src="https://github.com/user-attachments/assets/0f7a043c-1e01-42ee-880d-d568763a40a7" />**
 
 A arquitetura foi desenhada para ser eficiente e direta, utilizando Python como motor de execução e o PostgreSQL como repositório para todas as camadas de dados (Medallion Architecture).
 
