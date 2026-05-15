@@ -1,7 +1,0 @@
-UPDATE dados_empresas.estabelecimentos
-SET tempo_vida = CASE 
-    WHEN situacao_cadastral = '08' THEN data_situacao_cadastral - data_inicio_atividade
-    WHEN situacao_cadastral = '02' THEN CURRENT_DATE - data_inicio_atividade
-    ELSE NULL -- Para outras situações cadastrais (ex: Suspensa, Inapta)
-END
-WHERE data_inicio_atividade IS NOT NULL;
