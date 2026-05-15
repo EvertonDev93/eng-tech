@@ -1,5 +1,3 @@
----
-
 # 📊 EngTech: Inteligência de Dados para Sobrevivência Empresarial
 
 **Projeto de TCC em Engenharia de Dados** *Abordagem prática (Hands-On) focada na construção de uma solução de dados end-to-end para análise de risco empresarial no Brasil.*
